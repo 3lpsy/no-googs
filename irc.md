@@ -51,6 +51,8 @@ $ /set irc.server.freenode.nicks null/se
 
 ## Security
 
+May require setting "irc.server.freenode.username" to "" or null
+
 ```
 $ /set irc.server.freenode.ssl on
 $ /set irc.server.freenode.sasl_username "mynick"
