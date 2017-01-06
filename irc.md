@@ -17,7 +17,11 @@ $ /msg NickServ REGISTER password email@example.com
 
 ## Login (Freenode)
 ```
-/connect chat.freenode.net 6667 username:password
+$ /connect chat.freenode.net 6667 username:password
+
+$ /nick foo
+$ /msg NickServ IDENTIFY foo password
+
 ```
 
 # [Weechat](https://weechat.org/files/doc/devel/weechat_quickstart.en.html)
