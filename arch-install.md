@@ -1,5 +1,13 @@
 ## Download and "Burn" ISO to USB
 
+```
+## Verify UEFI/systemd-boot
+$ ls /sys/firmware/efi/efivars
+
+$ timedatectl set-ntp true
+
+
+```
 ## Wireless
 
 
@@ -78,4 +86,65 @@ In this case, we used the wpa_passphrase command to generate the config on the f
 
 If you sucessfully connect and then can't reconnect, attempt a restart if you don't want to continue debugging.
 
+
+### Update
+
+```
+$ pacman -Syyu
+```
+
+## Partition Disks
+
+### Using Fdisk
+```
+$ fdsik /dev/sdX
+Command:
+  ## create a new disk label (wipes partition)
+  > o
+  ## create a new partion
+  > n
+  ## with primary type
+  > p
+  ## first partion
+  > 1
+  ## first sector
+  > 20148
+  ## last sector
+  > 512MiB
+  > n
+  > p
+  > 2
+  > XXXX
+  > XXXX
+  ## change type to linux lvm
+  > t
+  > 2
+  > 8e
+  > w
+  
+```
+
+## Encryption
+
+### READ THE MAN PAGE
+
+```
+$ cryptsetup --cipher aes-xts-plain --key-size 512 --hash sha256 --iter-time 5000 --use-random --verify-passphrase luksFormat /dev/sdX2
+
+$ cryptsetup luksOpen /dev/sda2 lvm
+
+$ pvcreate --data-alignment 1m /dev/mapper/lvm
+
+$ vgcreate volgroup0 /dev/mapper/lvm
+
+$ lvcreate -L 100GB volgroup0 -n lv_root
+
+$ lvcreate -L 8G volgroup0 -n lv_swap
+
+$ lvcreate l 100%FREE volgroup -n lv_home
+
+$ modprobe dm_mod
+
+$ vgscan
+```
 
