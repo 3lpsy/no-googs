@@ -56,11 +56,18 @@ $ cat aps.txt | grep keyword
 $ wpa_supplicant -D nl80211,wext -i wlan0 -c <(wpa_passphrase "your_SSID" "your_key")
 
 ## after connecting sucessefully, run the command with -B flag to run it in the background
+
+## get ip
+
+$ dhcpcd wlan0
+
+$ ping 8.8.8.8
+$ ping google.com
 ```
 
 Breakdown
 
--D: Driver Name ("driver1") or Driver Names ("driver1,driver2)
+-D: Driver Name ("driver1") or Driver Names ("driver1,driver2). This flag is usually not needed.
 nl80211 is the netlink interface 802.11 driver for linux
 wext, or The Wireless Extension (WE), is a generic API allowing a driver to expose to the user space, configuration and statistics specific to common Wireless LANs. As far as I know, it is being phased out.
 
@@ -68,5 +75,7 @@ wext, or The Wireless Extension (WE), is a generic API allowing a driver to expo
 
 -c: configuration file
 In this case, we used the wpa_passphrase command to generate the config on the fly
+
+If you sucessfully connect and then can't reconnect, attempt a restart if you don't want to continue debugging.
 
 
